@@ -1,10 +1,12 @@
-
 package modelo;
 
+import java.util.ArrayList;
+
 public class Equipo {
+
     private String nombre;
     private int id;
-    private Estudiante participante[];
+    ArrayList<Estudiante> jugador = new ArrayList<>();
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -12,10 +14,6 @@ public class Equipo {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setParticipante(Estudiante[] participante) {
-        this.participante = participante;
     }
 
     public String getNombre() {
@@ -26,13 +24,9 @@ public class Equipo {
         return id;
     }
 
-    public Estudiante[] getParticipante() {
-        return participante;
-    }
-
     public Equipo(String nombre, int id) {
         this.nombre = nombre;
         this.id = id;
     }
-    
+
 }
