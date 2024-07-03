@@ -8,7 +8,7 @@ public class Universidad {
     Presentacion vw = new Presentacion();
     private String nombre;
     ArrayList<Estudiante> part = new ArrayList<>();
-    ArrayList<Estudiante> est = new ArrayList<>();
+    ArrayList<Estudiante> estudiante = new ArrayList<>();
     ArrayList<Equipo> equipo = new ArrayList<>();
 
     public String getNombre() {
@@ -25,23 +25,23 @@ public class Universidad {
 
     public void crearEstudiante() {
         Validacion v = new Validacion();
-        int id, op;
+        int id;
         float pg;
         String n;
         n = vw.pedirInfo("Ingrese nombre del estudiante:");
         do{
             id = vw.pedirEntero("Ingrese ID del estudiante:");
-        }while(!validarID(id));        
+        }while(!validarID1(id));        
         do {
             pg = vw.pedirDecimales("Ingrese promedio general de la carrera:");
         } while (!v.validarNota(pg));
         Estudiante e = new Estudiante(n, id, pg);
-        est.add(e);
+        estudiante.add(e);
 
     }
 
     public void crearEquipo() {
-        int id, op;
+        int id;
         String n;
         n = vw.pedirInfo("Ingrese nombre del equipo:");
         id = vw.pedirEntero("Ingrese ID del equipo");
@@ -53,44 +53,47 @@ public class Universidad {
     public void mostrarEstudiantes() {
         String msg = "";
         int a = 1;
-        for (Estudiante e : est) {
-            msg += a + ".\nNombre: " + e.getNombre() + "\nID: " + e.getId() + "\nPromedio General: " + e.getPrmGeneral() + "\n";
+        for (Estudiante e : estudiante) {
+            msg += a + ".  Nombre: " + e.getNombre() + "   ID: " + e.getId() + "    Promedio General: " + e.getPrmGeneral() + "\n";
             a++;
         }
         vw.mostrarRes(msg);
     }
-
-    public void mostrarEquipos() {
-        String msg = "";
-        int a = 1;
-        for (Equipo e : equipo) {
-            msg += a + ".\nNombre: " + e.getNombre() + "\nID: " + e.getId() + "\n";
-            a++;
-        }
-        vw.mostrarRes(msg);
-    }
+//
+//    public void mostrarEquipos() {
+//        String msg = "";
+//        int a = 1;
+//        for (Equipo e : equipo) {
+//            msg += a + ".\nNombre: " + e.getNombre() + "\nID: " + e.getId() + "\n";
+//            a++;
+//        }
+//        vw.mostrarRes(msg);
+//    }
 
     public void ingresarParticipante() {
-        Presentacion vw = new Presentacion();
         int id, aux;
         float pg;
         String n;
-        aux = vw.pedirEntero("Ingrese ID del estudiante a participar:");
-        for (Estudiante e : est) {
+        do{
+            aux = vw.pedirEntero("Ingrese ID del estudiante a participar:");
+        }while(!validarID2(aux));        
+        for (Estudiante e : estudiante) {
             if (e.getId() == aux) {
                 if (e.getPrmGeneral() >= 3.8) {
                     n = e.getNombre();
                     id = e.getId();
                     pg = e.getPrmGeneral();
                     Estudiante estd = new Estudiante(n, id, pg);
-                    String shw="Estudiante a participar"
-                            + "\n"+ e.getNombre() 
+                    String shw="""
+                               Estudiante a participar
+                               """+ e.getNombre() 
                             +"\n"+e.getId()
                             +"\n"+e.getPrmGeneral();
                     vw.mostrarRes(shw);
                     vw.mostrarRes("Acontinuacion se realizaran 3 pruebas, indique nombre y nota de cada una.");
                     estd.crearPrueba(3);
                     estd.promediar();
+                    part.add(estd);
                     String msg2=""+e.getNombre()+"\n"+e.getId()+"\nPromedio Total: "+estd.getPromTotal();
                     vw.mostrarRes(msg2);
                 }
@@ -99,21 +102,71 @@ public class Universidad {
     }
     
     public void mostrarParticipantes(){
-        String msg = "";
+        String txt = "";
         int a = 1;
-        for (Estudiante e : part) {
-            msg += a + ".\nNombre: " + e.getNombre() + "\t\tID: " + e.getId() + "\nPromedio General: " + e.getPrmGeneral() + "\n";
+        for (int i=0;i<part.size();i++) {
+            txt += a + ".  Nombre: " + part.get(i).getNombre() + "   ID: " + part.get(i).getId() + "   Promedio Total: " + part.get(i).getPromTotal()+ "\n";
+            a++;
+        }
+        vw.mostrarRes(txt);
+    }
+    
+    public void ingresaraEquipos(){
+        Equipo e1 = equipo.get(0);
+        Equipo e2 = equipo.get(1);
+        Equipo e3 = equipo.get(2);
+        int a, b, c;
+        for(a=0, b=1, c=2;c<=15 ;a+=3,b+=3,c+=3){ 
+            String nA = part.get(a).getNombre();
+            int idA = part.get(a).getId();
+            float ptA = part.get(a).getPromTotal();
+            String nB = part.get(b).getNombre();
+            int idB = part.get(b).getId();
+            float ptB = part.get(b).getPromTotal();
+            String nC = part.get(c).getNombre();
+            int idC = part.get(c).getId();
+            float ptC = part.get(c).getPromTotal();
+            e1.crearJugador(nA, idA, ptA);
+            e2.crearJugador(nB, idB, ptB);
+            e3.crearJugador(nC, idC, ptC);
+        }
+    }
+    
+    public void mostrarEquipos(){
+        String msg="";
+        int a = 1;
+        for(Equipo eq : equipo){
+            msg+=a+".  Nombre: "+eq.getNombre()+"  ID: "+eq.getId()+"\nJugadores:\n";
+            msg+=eq.mostrarJugadores()+"\n\n";
             a++;
         }
         vw.mostrarRes(msg);
     }
 
-    private boolean validarID(int a) {
-        for(Estudiante e : est){
+    private boolean validarID1(int a) {
+        for(Estudiante e : estudiante){
             if(a == e.getId()){
                 vw.mostrarRes("ID ya existente.");
                 return false;
             }
+        }
+        return true;
+    }
+    
+    private boolean validarID2(int a) {
+        for(Estudiante e : part){
+            if(a == e.getId()){
+                vw.mostrarRes("ID ya existente.");
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean validarIdEquipo(int a){
+        for(Equipo e : equipo){
+            if(a==e.getId())
+                return false;
         }
         return true;
     }

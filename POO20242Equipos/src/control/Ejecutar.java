@@ -23,6 +23,7 @@ public class Ejecutar {
                     + "\n5. Mostrar equipos."
                     + "\n6. Postular estudiante a interuniversitario."
                     + "\n7. Mostrar participantes."
+                    + "\n8. Enviar participantes a equipos."
                     + "\n0. Salir";
             op = vw.pedirEntero(menu);
             switch (op) {
