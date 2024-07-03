@@ -29,10 +29,12 @@ public class Universidad {
         float pg;
         String n;
         n = vw.pedirInfo("Ingrese nombre del estudiante:");
-        id = vw.pedirEntero("Ingrese ID del estudiante:");
+        do{
+            id = vw.pedirEntero("Ingrese ID del estudiante:");
+        }while(!validarID(id));        
         do {
             pg = vw.pedirDecimales("Ingrese promedio general de la carrera:");
-        } while (!v.validarPromedio(pg));
+        } while (!v.validarNota(pg));
         Estudiante e = new Estudiante(n, id, pg);
         est.add(e);
 
@@ -66,5 +68,53 @@ public class Universidad {
             a++;
         }
         vw.mostrarRes(msg);
+    }
+
+    public void ingresarParticipante() {
+        Presentacion vw = new Presentacion();
+        int id, aux;
+        float pg;
+        String n;
+        aux = vw.pedirEntero("Ingrese ID del estudiante a participar:");
+        for (Estudiante e : est) {
+            if (e.getId() == aux) {
+                if (e.getPrmGeneral() >= 3.8) {
+                    n = e.getNombre();
+                    id = e.getId();
+                    pg = e.getPrmGeneral();
+                    Estudiante estd = new Estudiante(n, id, pg);
+                    String shw="Estudiante a participar"
+                            + "\n"+ e.getNombre() 
+                            +"\n"+e.getId()
+                            +"\n"+e.getPrmGeneral();
+                    vw.mostrarRes(shw);
+                    vw.mostrarRes("Acontinuacion se realizaran 3 pruebas, indique nombre y nota de cada una.");
+                    estd.crearPrueba(3);
+                    estd.promediar();
+                    String msg2=""+e.getNombre()+"\n"+e.getId()+"\nPromedio Total: "+estd.getPromTotal();
+                    vw.mostrarRes(msg2);
+                }
+            }
+        }
+    }
+    
+    public void mostrarParticipantes(){
+        String msg = "";
+        int a = 1;
+        for (Estudiante e : part) {
+            msg += a + ".\nNombre: " + e.getNombre() + "\t\tID: " + e.getId() + "\nPromedio General: " + e.getPrmGeneral() + "\n";
+            a++;
+        }
+        vw.mostrarRes(msg);
+    }
+
+    private boolean validarID(int a) {
+        for(Estudiante e : est){
+            if(a == e.getId()){
+                vw.mostrarRes("ID ya existente.");
+                return false;
+            }
+        }
+        return true;
     }
 }

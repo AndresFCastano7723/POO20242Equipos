@@ -1,5 +1,6 @@
 package control;
 
+import javax.swing.JOptionPane;
 import modelo.*;
 import vista.*;
 
@@ -14,13 +15,14 @@ public class Ejecutar {
         int op;
 
         do {
-            String menu = "Menu\n"
+            String menu = "Menu"
                     + "\n1. Crear estudiante."
                     + "\n2. Crear varios estudiantes."
                     + "\n3. Crear equipo."
                     + "\n4. Mostrar estudiantes."
                     + "\n5. Mostrar equipos."
                     + "\n6. Postular estudiante a interuniversitario."
+                    + "\n7. Mostrar participantes."
                     + "\n0. Salir";
             op = vw.pedirEntero(menu);
             switch (op) {
@@ -47,8 +49,19 @@ public class Ejecutar {
                 case 5:
                     ud.mostrarEquipos();
                     break;
+                    
+                case 6:
+                    ud.ingresarParticipante();
+                    break;
+                
+                case 7:
+                    ud.mostrarParticipantes();
+                    break;
             }
         } while (op != 0);
+        if(op == 0){
+            
+        }
 
     }
 
