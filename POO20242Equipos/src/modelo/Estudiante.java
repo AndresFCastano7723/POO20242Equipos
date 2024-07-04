@@ -44,6 +44,10 @@ public class Estudiante {
         return promTotal;
     }
 
+    public ArrayList<Prueba> getPruebas() {
+        return pruebas;
+    }
+
     public Estudiante(String nombre, int id, float prmGeneral) {
         this.nombre = nombre;
         this.id = id;
