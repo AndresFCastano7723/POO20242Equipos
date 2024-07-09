@@ -30,9 +30,8 @@ public class Equipo {
         this.id = id;
     }
     
-    public void crearJugador(String nombre, int id, float promTotal){
-        if(validarPromedio(promTotal)){
-            Estudiante e = new Estudiante(nombre, id, promTotal);
+    public void crearJugador(Estudiante e){
+        if(validarPromedio(e.getPromTotal())){
             jugador.add(e);
         }
     }

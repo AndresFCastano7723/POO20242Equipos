@@ -118,18 +118,9 @@ public class Universidad {
         Equipo e3 = equipo.get(2);
         int a, b, c;
         for (a = 0, b = 1, c = 2; c < 15 || b < 15 || a < 15; a += 3, b += 3, c += 3) {
-            String nA = part.get(a).getNombre();
-            int idA = part.get(a).getId();
-            float ptA = part.get(a).getPromTotal();
-            String nB = part.get(b).getNombre();//Aquí hay un error :D
-            int idB = part.get(b).getId();
-            float ptB = part.get(b).getPromTotal();
-            String nC = part.get(c).getNombre();
-            int idC = part.get(c).getId();
-            float ptC = part.get(c).getPromTotal();
-            e1.crearJugador(nA, idA, ptA);
-            e2.crearJugador(nB, idB, ptB);
-            e3.crearJugador(nC, idC, ptC);
+            e1.crearJugador(part.get(a));
+            e2.crearJugador(part.get(b));
+            e3.crearJugador(part.get(c));
         }
     }
 

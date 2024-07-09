@@ -63,7 +63,7 @@ public class Estudiante {
             n = vw.pedirInfo("Ingrese nombre de la prueba #" + (i + 1) + ":");
             do{
                 nt = vw.pedirDecimales("Ingrese nota de la prueba #" + (i + 1) + ":");
-            }while(!v.validarNota(nt));            
+            }while(!v.validarNota(nt));
             Prueba pr = new Prueba(n, nt);
             pruebas.add(pr);
         }
